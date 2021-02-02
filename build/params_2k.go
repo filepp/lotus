@@ -1,4 +1,4 @@
-// +build debug 2k
+// +build 2k
 
 package build
 
