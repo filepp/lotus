@@ -8,11 +8,12 @@ import (
 	"github.com/filecoin-project/lotus/chain/actors/policy"
 	"github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
+	builtin2 "github.com/filecoin-project/specs-actors/v2/actors/builtin"
 	"os"
 )
 
-const BootstrappersFile = ""
-const GenesisFile = ""
+const BootstrappersFile = "fileppnet.pi"
+const GenesisFile = "fileppnet.car"
 
 const UpgradeBreezeHeight = -1
 const BreezeGasTampingDuration = 0
@@ -36,6 +37,7 @@ var DrandSchedule = map[abi.ChainEpoch]DrandEnum{
 }
 
 func init() {
+	BuildType |= BuildDebug
 	policy.SetSupportedProofTypes(
 		abi.RegisteredSealProof_StackedDrg2KiBV1,
 		abi.RegisteredSealProof_StackedDrg8MiBV1,
@@ -46,8 +48,8 @@ func init() {
 	policy.SetConsensusMinerMinPower(abi.NewStoragePower(2048))
 	policy.SetMinVerifiedDealSize(abi.NewStoragePower(256))
 
-	miner.PreCommitChallengeDelay = abi.ChainEpoch(10)
-	miner2.PreCommitChallengeDelay = abi.ChainEpoch(10)
+	miner.PreCommitChallengeDelay = abi.ChainEpoch(60)
+	miner2.PreCommitChallengeDelay = abi.ChainEpoch(60)
 
 	if os.Getenv("LOTUS_USE_TEST_ADDRESSES") != "1" {
 		SetAddressNetwork(address.Mainnet)
@@ -56,17 +58,8 @@ func init() {
 	Devnet = false
 }
 
-const BlockDelaySecs = uint64(20)
+const BlockDelaySecs = uint64(builtin2.EpochDurationSeconds)
 
-const PropagationDelaySecs = uint64(5)
-
-// SlashablePowerDelay is the number of epochs after ElectionPeriodStart, after
-// which the miner is slashed
-//
-// Epochs
-const SlashablePowerDelay = 20
-
-// Epochs
-const InteractivePoRepConfidence = 6
+const PropagationDelaySecs = uint64(6)
 
 const BootstrapPeerThreshold = 1
