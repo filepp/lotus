@@ -12,8 +12,8 @@ import (
 	"os"
 )
 
-const BootstrappersFile = ""
-const GenesisFile = ""
+const BootstrappersFile = "fileppnet.pi"
+const GenesisFile = "fileppnet.car"
 
 const UpgradeBreezeHeight = -1
 const BreezeGasTampingDuration = 0
